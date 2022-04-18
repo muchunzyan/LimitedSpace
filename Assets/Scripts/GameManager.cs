@@ -13,11 +13,18 @@ public class GameManager : MonoBehaviour
     private float _scaleTimer;
     private bool _needToIncreaseScale;
 
+    private float _slowTimeTimer;
+    private bool _needToIncreaseTime;
+
     private void FixedUpdate()
     {
         if (isDead) return;
         
-        _score += Time.fixedDeltaTime;
+        if (_needToIncreaseTime)
+            _score += 2 * Time.fixedDeltaTime;
+        else
+            _score += Time.fixedDeltaTime;
+        
         scoreText.text = ((int)_score).ToString();
 
         _scaleTimer -= Time.fixedDeltaTime;
@@ -27,6 +34,12 @@ public class GameManager : MonoBehaviour
         var player = GameObject.FindWithTag("Player");
         player.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
         player.transform.position += new Vector3(0.0f, 0.25f, 0.0f);
+
+        _slowTimeTimer -= Time.fixedDeltaTime;
+        if (!_needToIncreaseTime || !(_slowTimeTimer < 0)) return;
+        
+        _needToIncreaseTime = false;
+        Time.timeScale = 1;
     }
 
     public void PlayerDeath()
@@ -62,6 +75,14 @@ public class GameManager : MonoBehaviour
 
         _scaleTimer = 5;
         _needToIncreaseScale = true;
+    }
+
+    public void SlowTime()
+    {
+        Time.timeScale = 0.5f;
+
+        _slowTimeTimer = 2.5f;
+        _needToIncreaseTime = true;
     }
 
     public void PlayAgain()

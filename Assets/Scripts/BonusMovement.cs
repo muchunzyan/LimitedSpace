@@ -36,6 +36,10 @@ public class BonusMovement : MonoBehaviour
                 {
                     GameObject.Find("Scripts").GetComponent<GameManager>().ScaleDecrease();
                 }
+                else if (gameObject.CompareTag("SlowTime"))
+                {
+                    GameObject.Find("Scripts").GetComponent<GameManager>().SlowTime();
+                }
                 
                 Destroy(gameObject);
             }
