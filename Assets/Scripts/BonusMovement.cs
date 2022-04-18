@@ -32,6 +32,10 @@ public class BonusMovement : MonoBehaviour
                 {
                     GameObject.Find("Scripts").GetComponent<GameManager>().IncreaseCoins();
                 }
+                else if (gameObject.CompareTag("ScaleDecreaser"))
+                {
+                    GameObject.Find("Scripts").GetComponent<GameManager>().ScaleDecrease();
+                }
                 
                 Destroy(gameObject);
             }
